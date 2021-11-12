@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source ~/.profile
+
 if [ ! -d "input" ] ; then
 	echo "Downloading dataset!"
 	mkdir input

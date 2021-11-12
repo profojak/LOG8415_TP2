@@ -52,7 +52,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 ' > $HADOOP/etc/hadoop/hdfs-site.xml
 echo "KEEP DEFAULT VALUES, PRESS ENTER!"
 ssh-keygen
-ssh-copy-id -i ~/.ssh/id_rsa $(whoami)@localhost
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 sudo mkdir /var/lib/hadoop
 sudo chmod 777 /var/lib/hadoop
 hdfs namenode -format
