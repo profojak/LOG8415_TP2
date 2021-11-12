@@ -1,0 +1,3 @@
+[submodule "FriendRecommender"]
+	path = FriendRecommender
+	url = git@github.com:warggr/FriendRecommender
