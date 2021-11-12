@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 HADOOP=/usr/local/hadoop-3.3.1
-sudo apt install java-8-openjdk-headless python3 pip3
+sudo apt update
+sudo apt install openjdk-8-jre-headless python3 python3-pip
 pip3 install pyspark
 echo '
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
@@ -12,19 +13,19 @@ export PATH="$HADOOP_HOME/bin:$PATH"
 wget https://dlcdn.apache.org/hadoop/common/current/hadoop-3.3.1.tar.gz
 wget https://dlcdn.apache.org/hadoop/common/current/hadoop-3.3.1.tar.gz.sha512
 DIFF=$(diff <(sha512sum hadoop-3.3.1.tar.gz | cut -d " " -f 1) <(cat hadoop-3.3.1.tar.gz.sha512 | cut -d " " -f 4))
-if [ "$DIFF" != "" ]
+if [ "$DIFF" != "" ] ; then
 	echo "SHA512 of Hadoop not matching! Aborting..."
 	exit
 fi
+echo "SHA512 hash verified!"
 sudo tar -xf hadoop-3.3.1.tar.gz -C /usr/local/
-rm hadoop-3.3.1.tar.gz
+rm hadoop-3.3.1.tar.gz hadoop-3.3.1.tar.gz.sha512
 echo '
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 export HADOOP_HOME=/usr/local/hadoop-3.3.1
 ' >> $HADOOP/etc/hadoop/hadoop-env.sh
 source ~/.profile
-echo '
-<?xml version="1.0" encoding="UTF-8"?>
+echo '<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 
 <configuration>
@@ -39,8 +40,7 @@ echo '
     </property>
 </configuration>
 ' > $HADOOP/etc/hadoop/core-site.xml
-echo '
-<?xml version="1.0" encoding="UTF-8"?>
+echo '<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 
 <configuration>
@@ -51,18 +51,9 @@ echo '
 </configuration>
 ' > $HADOOP/etc/hadoop/hdfs-site.xml
 echo "KEEP DEFAULT VALUES, PRESS ENTER!"
-shh-keygen
-echo "PLEASE ENTER USERNAME YOU LOGIN WITH TO AZURE VM:"
-read USERNAME
-echo "PLEASE ENTER PUBLIC IP ADRESS OF YOUR AZURE VM:"
-read ADDRESS
-shh-copy-id -i ~/.ssh/id_rsa $USERNAME@$ADDRESS
-ssh $ADDRESS & exit
+ssh-keygen
+ssh-copy-id -i ~/.ssh/id_rsa $(whoami)@localhost
 sudo mkdir /var/lib/hadoop
 sudo chmod 777 /var/lib/hadoop
 hdfs namenode -format
-$HADOOP/sbin/start-all.sh
-hdfs dfs -mkdir /user
-hdfs dfs -mkdir /user/$USERNAME
-rm hadoop-3.3.1.tar.gz hadoop-3.3.1.tar.gz.sha512
-echo "HADOOP AND SPARK SET UP, DON'T FORGET TO RUN /usr/local/hadoop-3.3.1/sbin/stop-all.sh TO STOP HADOOP DAEMONS"
+echo "SPARK AND HADOOP READY! START HADOOP DEAMONS WITH source ~/.profile & /usr/local/hadoop-3.3.1/sbin/start-all.sh"
