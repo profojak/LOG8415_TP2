@@ -56,4 +56,4 @@ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 sudo mkdir /var/lib/hadoop
 sudo chmod 777 /var/lib/hadoop
 hdfs namenode -format
-echo "SPARK AND HADOOP READY! START HADOOP DEAMONS WITH source ~/.profile & /usr/local/hadoop-3.3.1/sbin/start-all.sh"
+echo "SPARK AND HADOOP READY!"
