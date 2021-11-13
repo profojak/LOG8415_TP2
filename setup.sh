@@ -7,12 +7,8 @@ pip3 install pyspark
 echo '
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 export HADOOP_HOME=/usr/local/hadoop-3.3.1
-export SPARK_HOME=/opt/spark
-PATH="$JAVA_HOME/bin:$PATH"
-PATH="$HADOOP_HOME/bin:$PATH"
-PATH="/opt/spark:$PATH"
-PATH="/opt/spark/bin:$PATH"
-export PATH="/opt/spark/sbin:$PATH"
+export PATH="$JAVA_HOME/bin:$PATH"
+export PATH="$HADOOP_HOME/bin:$PATH"
 ' >> ~/.profile
 wget https://dlcdn.apache.org/hadoop/common/current/hadoop-3.3.1.tar.gz
 wget https://dlcdn.apache.org/hadoop/common/current/hadoop-3.3.1.tar.gz.sha512
