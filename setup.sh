@@ -2,7 +2,7 @@
 
 HADOOP=/usr/local/hadoop-3.3.1
 sudo apt update
-sudo apt install openjdk-8-jre-headless python3 python3-pip
+sudo apt install -y openjdk-8-jre-headless python3 python3-pip
 pip3 install pyspark
 echo '
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
