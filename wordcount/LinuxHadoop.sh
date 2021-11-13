@@ -28,12 +28,10 @@ for input in input/*.txt; do
         FILENAME=$(basename "$input")
         echo "Benchmarking $FILENAME"
         for i in {1..3}; do
-			LINUX_TIME=$(time (cat $input | tr ' ' '\n' | sort | uniq -c &> /dev/null) 2>&1 )
+		LINUX_TIME=$(time (cat $input | tr ' ' '\n' | sort | uniq -c &> /dev/null) 2>&1 )
         	times_linux+=($LINUX_TIME)
 		echo "Linux: $LINUX_TIME"
 
-
-		echo "$input"
                 HADOOP_TIME=$(time (hadoop jar /usr/local/hadoop-3.3.1/share/hadoop/tools/lib/hadoop-streaming-3.3.1.jar -mapper mapper.py -reducer reducer.py -input $input -output output &> /dev/null) 2>&1 )
                 times_hadoop+=($HADOOP_TIME)
 		echo "Hadoop: $HADOOP_TIME"
