@@ -28,3 +28,5 @@ for index, avg in enumerate(averages, start=1):
 	print(f'({index}, {round(avg, 2)}) ', end='')
 
 
+
+# This comment is here to preserve newlines. Benchmark is done.
