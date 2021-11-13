@@ -41,7 +41,7 @@ for input in input/*.txt; do
         FILENAME=$(basename "$input")
         echo "Benchmarking $FILENAME"
         for i in {1..3}; do
-			SPARK_TIME=$(time (spark-submit spark.py $input wordcount/output &> /dev/null) 2>&1 )
+		SPARK_TIME=$(time (spark-submit spark.py $input wordcount/output &> /dev/null) 2>&1 )
         	times_spark+=($SPARK_TIME)
 		echo "Spark: $SPARK_TIME"
 
